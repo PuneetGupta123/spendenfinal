@@ -76,8 +76,8 @@ public class Tab1 extends Fragment implements FeedFetcherAsyncTask.BatchTaskDone
         task1.listener=this;
 
 
-//        String urlString = "http://10.60.3.11:5000/feed";
-//        task.execute(urlString);
+       String urlString = "http://192.168.1.104:5000/feed";
+        task.execute(urlString);
 
 
 //        FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
@@ -187,7 +187,7 @@ public class Tab1 extends Fragment implements FeedFetcherAsyncTask.BatchTaskDone
                     Toast.makeText(getActivity(),"The Item Clicked is: "+Eid,Toast.LENGTH_SHORT).show();
                     EntryFetcherAsyncTask task = new EntryFetcherAsyncTask();
                     task.listener = task1.listener;
-                    String urlString = "http://10.60.3.11:5000/entry?eid="+Eid;
+                    String urlString = "http://192.168.1.104:5000/entry?eid="+Eid;
                     task.execute(urlString);
                     return true;
 

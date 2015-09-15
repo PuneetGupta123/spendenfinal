@@ -2,6 +2,10 @@ package com.example.abhishek.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,7 +74,8 @@ public class Post_add extends ActionBarActivity implements AdapterView.OnItemSel
 
                         String urlString = "http://192.168.1.104:5000/addentry";
                         task.execute(hm);
-
+                        final Intent changeActivity = new Intent(c,MainActivity.class);
+                        startActivity(changeActivity);
                     }
 
                 }
@@ -79,16 +84,13 @@ public class Post_add extends ActionBarActivity implements AdapterView.OnItemSel
         imageView.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view) {
-                if(view.getId()==R.id.gallery){
+            public void onClick(View arg0) {
 
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
-            }
-
             }
         });
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -135,4 +137,25 @@ public class Post_add extends ActionBarActivity implements AdapterView.OnItemSel
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+
+        }
+    }
+
 }

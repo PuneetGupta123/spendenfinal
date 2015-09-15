@@ -95,7 +95,7 @@ public class EntrySenderAsyncTask extends AsyncTask<HashMap<String,String>, Void
         HashMap<String,String> hm=params[0];
         Log.d("HAshmap in ESATASK",hm.toString());
         //for registerhttps://te
-        HttpPost httppost = new HttpPost("http://10.60.3.11:5000/addentry");
+        HttpPost httppost = new HttpPost("http://192.168.1.104:5000/addentry");
         //add data
         try{
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(7);
